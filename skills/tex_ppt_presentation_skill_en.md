@@ -16,7 +16,7 @@
 ## 3. Figure Integration Workflow (Execution Order)
 1. Build a mapping table: `source figure id -> slide page -> speaking purpose -> concepts to explain`
 2. Choose layout first: single figure / side-by-side / figure + short takeaway / concept-bridge page
-3. Assign a size budget before editing: dominant block, secondary block, and approximate width share
+3. Assign a size budget before editing: dominant block, secondary block, figure aspect ratio, binding constraint (width-limited or height-limited), and approximate width share
 4. Ensure alignment first, then tune size
 5. Write caption and speaking sentence
 6. Compile and check overflow, overlap, sizing, and numbering
@@ -62,7 +62,22 @@
   - Keep legends on the same or neighboring page as the main figure
 - Keep grouped figures together so the audience can compare them without switching pages.
 - Match layout to figure shape when it improves readability: wide figures can use top-bottom placement, and tall figures can use left-right placement.
+- Do not maximize a side-by-side figure column blindly. With `keepaspectratio`, portrait figures are often height-limited; widening their column creates unused horizontal whitespace and compresses the text.
+- For 3:4 or portrait figures, prefer about `0.42-0.45\textwidth` for the figure column and `0.52-0.55\textwidth` for the text column.
+- For 16:9 or wide figures, prefer about `0.64-0.70\textwidth` for the figure column and `0.28-0.34\textwidth` for the text column, or switch to top-bottom/full-width if text becomes fragmented.
+- If paragraph endings are very short or bullets wrap after one or two words, widen the text column before shrinking font size. Avoid `\tiny` for normal explanatory text.
 - Every key figure must have one explicit takeaway sentence and a size target.
+
+### 6.1 Text Width, Gaps, and White Space
+- Adjust text box width before reducing font size. If the final line of a paragraph or bullet is less than about half of the longest line, widen the text column or change to a top-bottom layout.
+- One- or two-word wrapped lines are a layout warning. Fix the column width, shorten the sentence, or split the slide.
+- On image-led slides, avoid heavy `block` wrappers when their title bars consume the space needed by the image. Use bold inline labels or unframed notes instead.
+- Limit normal slides to two major text blocks. More than two blocks plus a large image usually requires a split slide.
+- Use `\small` or `\scriptsize` for normal explanatory text. Reserve `\tiny` for citations, metadata, or intentionally secondary labels.
+- Negative `\vspace` should be small and deliberate, usually between `-0.3em` and `-0.8em`. If a slide needs multiple large negative gaps, redesign the layout.
+- For wide images, constrain both width and height with `keepaspectratio`, such as `width=\linewidth,height=0.55\textheight,keepaspectratio`.
+- If large blank areas appear because an image is height-limited or the text column is too narrow, rebalance columns instead of accepting the whitespace.
+- Export PDF screenshots after significant layout changes and inspect geometry. If CJK fonts are missing in the screenshot tool, use screenshots for spatial balance and verify text in the PDF viewer.
 
 ## 7. Reusable TeX Templates
 
@@ -95,7 +110,30 @@
 \end{frame}
 ```
 
-### 7.3 Wide Figure That Looks Off-Center
+### 7.3 Portrait Figure With Text
+Use this for 3:4 diagrams or tall screenshots. The figure stays near max height while the text column keeps natural line length.
+
+```tex
+\begin{frame}{Architecture}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.43\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,height=0.82\textheight,keepaspectratio]{fig/topic/portrait-diagram.pdf}
+
+    \column{0.54\textwidth}
+      \scriptsize
+      \begin{block}{Key takeaways}
+        \begin{itemize}
+          \item The raw source layer remains read-only.
+          \item The wiki layer accumulates summaries, entities, concepts, and cross-links.
+          \item The schema layer keeps update rules explicit.
+        \end{itemize}
+      \end{block}
+  \end{columns}
+\end{frame}
+```
+
+### 7.4 Wide Figure That Looks Off-Center
 ```tex
 \begin{frame}{Process Overview}
   \centering
@@ -127,6 +165,7 @@
 - Duplicated numbering: remove manual "Figure X" from caption.
 - Unclear meaning: add variables and usage context in caption or the first speaking sentence.
 - Overlap or crowding: reduce image width, add `\vspace`, shorten caption text, or split the slide.
+- Wasted horizontal space beside a portrait figure: reduce the figure column and widen the text column; the figure is probably height-limited and will not shrink if its height cap remains unchanged.
 - Slow compile or memory pressure: compress oversized PNG files, prefer PDF.
 - Output PDF locked: compile to a temporary jobname first (for example `-jobname=slides_tmp`).
 
@@ -134,6 +173,7 @@
 - Use `tools/ppt_layout_audit.py --tex pre.tex --log pre.log` after the first compile.
 - Treat `Overfull \hbox` and `Overfull \vbox` as layout bugs, not cosmetic warnings.
 - If a slide has too many bullets, too many major blocks, or unbalanced figure widths, split or rebalance it.
+- Export representative screenshots after compiling. Check at least one wide-figure page and one portrait side-by-side page. If the screenshot renderer lacks CJK fonts, use screenshots for spatial balance and verify text in the PDF viewer.
 
 ## 10. Source TeX to Slide TeX (Figure Extraction by Appearance Order)
 - Inputs:

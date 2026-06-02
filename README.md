@@ -14,14 +14,17 @@ Vibe Academic PPT is a workspace for building academic paper presentation slides
 
 ## Recommended Workflow
 1. Put the paper PDF, course brief, and any supporting notes in `reference/`.
-2. Copy the template from `template/` into `output/` before writing slides.
-3. Run `academic-ppt-planner` to refine the requirements and build the page outline.
-4. Run `presentation-personalizer` whenever duration, audience, or figure strategy changes.
-5. Draft `pre.tex` and `pre.bib` in `output/`, then use `tex-ppt-structuring` to place figures and prepare the speech script.
-6. Build in `output/` with `tex-builder`, then run the layout audit before finalizing the PDF.
+2. Ask the user to write or approve a lightweight markdown outline before generating the full PPT.
+3. Copy the template from `template/` into `output/` before writing slides.
+4. Run `academic-ppt-planner` to refine the requirements and expand the markdown outline into a page plan.
+5. Run `illustration-prompt-exporter` when the deck needs generated diagrams or screenshot instructions as a standalone prompt file.
+6. Run `presentation-personalizer` whenever duration, audience, or figure strategy changes.
+7. Draft `pre.tex` and `pre.bib` in `output/`, then use `tex-ppt-structuring` to place figures and prepare the speech script.
+8. Build in `output/` with `tex-builder`, export screenshots for representative pages, then run the layout audit before finalizing the PDF.
 
 ## Skills and Notes
 - [`skills/academic-ppt-planner/SKILL.md`](skills/academic-ppt-planner/SKILL.md): requirement refinement and page planning
+- [`skills/illustration-prompt-exporter/SKILL.md`](skills/illustration-prompt-exporter/SKILL.md): standalone illustration prompt and screenshot instruction export
 - [`skills/presentation-personalizer/SKILL.md`](skills/presentation-personalizer/SKILL.md): persistent presentation preferences
 - [`skills/tex-ppt-structuring/SKILL.md`](skills/tex-ppt-structuring/SKILL.md): slide structuring, figure placement, and speech scripts
 - [`skills/tex-builder/SKILL.md`](skills/tex-builder/SKILL.md): XeLaTeX build and troubleshooting

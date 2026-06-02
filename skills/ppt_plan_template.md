@@ -13,9 +13,34 @@
 ## 1. Input Materials
 - Paper PDF:
 - Course references / textbook chapters:
-- Existing outline (if any):
+- Markdown outline / rough outline:
+- Existing full outline (if any):
 - Figure sources (paper figures, experiment plots, flowcharts):
 - Notes / glossary / terminology list:
+
+## 1.1 Markdown Outline First
+Before drafting TeX, write or confirm a lightweight markdown outline.
+
+```markdown
+# <Presentation Title>
+
+- Goal:
+- Audience:
+- Duration:
+- Must-cover examples / figures / citations:
+
+## 1. <Section Title>
+- Slide goal:
+- Visual anchor:
+- Key points:
+
+## 2. <Section Title>
+- Slide goal:
+- Visual anchor:
+- Key points:
+```
+
+Use this outline as the user's intent contract. Only after it is stable should the planner expand it into page-level slides, figure maps, prompt maps, and TeX structure.
 
 ## 2. Requirement Refinement (Do This First)
 ### 2.1 Content Goals
@@ -46,6 +71,9 @@
 - Layout: visual-first with controlled density
 - Size budget per page: dominant block / secondary block / caption length
 - Math expression: consistent notation, readable formulas
+- Generated diagram style: clean academic vector technical diagram, light background, thin lines, rounded rectangles, blue/teal/gray palette with subtle warm accents, minimal labels or placeholder labels, no watermark, no logo
+- Generated-image tools: nanobanana or other image-generation AI may be used, but prompts should remain portable and tool-agnostic
+- Screenshot strategy: use real screenshots for product UI, GitHub repos, terminal output, actual generated pages, and demo evidence
 
 ### 2.4 Delivery Criteria
 - Target page count (recommended 14-20):
@@ -73,13 +101,39 @@
 ## 4. Figure-Text Strategy (Must Be Explicit)
 - At least one visual anchor per page (figure / flowchart / table).
 - Prioritize key paper figures in matching logical positions.
+- For non-paper visuals, decide whether to use a generated technical diagram or a real screenshot.
 - For each page, record:
   - Dominant visual element:
+  - Visual type: source figure / generated diagram / screenshot / table / equation
+  - Visual purpose: mechanism / evidence / comparison / workflow / concept bridge
+  - Recommended aspect ratio: 3:4 / 16:9 / original crop
   - Supporting text budget (bullet count / line count):
   - Size ratio target:
+  - Image/text ratio target:
   - Split condition:
 - Figure naming convention: `fig/<section>/<figure-name>.<ext>`
 - Add 1-2 speaking points for each key figure.
+
+## 4.1 Generated Image Prompt Map
+> Fill this before or alongside TeX drafting. Most generated technical diagrams should be 3:4 for side-column placement. Use 16:9 only for dense overview, comparison, or swimlane figures.
+> For decks with several generated images, export this section as a standalone prompt file with `illustration-prompt-exporter`.
+
+| Slide | Visual type | Aspect ratio | Image/text ratio | Screenshot needed? | Prompt / Screenshot instruction |
+| --- | --- | --- | --- | --- | --- |
+| Example slide | generated diagram | 3:4 | 45/55 | no | Create a compact flowchart... Unified style: clean academic vector technical diagram... |
+
+Prompt checklist:
+- Include the diagram type: architecture / pipeline / comparison / taxonomy / risk flow / maturity model.
+- Include the exact nodes and arrows the audience must understand.
+- Include the unified style instruction.
+- Ask for minimal labels or placeholder labels if the generator struggles with text.
+- State the aspect ratio and whether the image is intended as a side-column visual or full-slide visual.
+
+Screenshot checklist:
+- Identify the exact UI/document region to capture.
+- Crop aggressively to the evidence, not the whole screen.
+- Ensure text is readable after insertion into PPT.
+- Pair screenshot pages with fewer bullets.
 
 ## 5. Layout Preflight Check
 ### 5.1 Quick Rules
@@ -87,6 +141,10 @@
 - If a page has more than 2 major blocks, treat it as a split candidate.
 - If a single figure occupies less than 35% or more than 85% of the page width without intent, revise the layout.
 - For side-by-side layouts, keep the visual weight balanced unless one side is clearly the primary figure.
+- If a paragraph or bullet leaves a very short last line, widen the text box or adjust the layout before shrinking fonts.
+- If bullets wrap into isolated one- or two-word lines, the text column is too narrow or the sentence is too long.
+- On visual-led pages, remove heavy block wrappers when their title bars steal image height.
+- Keep negative `\vspace` small and intentional. Rework the layout if multiple large gap fixes are needed.
 - Keep captions short enough to remain in one or two lines.
 - Read each page from the audience's point of view and check whether the main message is clear on first pass.
 - Match figure layout to aspect ratio and grouping, and keep related figures on the same page when possible.

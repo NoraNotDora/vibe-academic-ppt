@@ -6,13 +6,14 @@ Canonical instructions live in each skill's `SKILL.md`. The top-level markdown f
 
 ## Skill Folders
 - `academic-ppt-planner/`: refine presentation requirements, build the page outline, and map figures to slides
+- `illustration-prompt-exporter/`: export standalone generated-image and screenshot prompt maps
 - `presentation-personalizer/`: maintain persistent presentation preferences and override history
 - `tex-ppt-structuring/`: arrange figures, balance slide density, and draft the deliverable speech script
 - `tex-builder/`: build and troubleshoot XeLaTeX slide decks in `output/`
 - `natural-academic-language/`: polish academic slide text, speaker notes, and translations to sound natural and concise
 
 ## Supporting Documents
-- `ppt_plan_template.md`: fill-in scaffold for requirement refinement and page planning
+- `ppt_plan_template.md`: fill-in scaffold for markdown-outline-first requirement refinement and page planning
 - `presentation_personalization_requirements.md`: persistent preference store for presentation revisions
 - `tex_guide.md`: quick build and troubleshooting notes for the TeX workflow
 - `tex_ppt_presentation_skill_en.md`: longer reference notes for slide structuring and script generation
